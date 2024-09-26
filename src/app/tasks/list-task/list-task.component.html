@@ -1,1 +1,12 @@
 <p>list-task works!</p>
+<div>
+  <ul>
+    <li *ngFor="let task of tasks">
+      {{ task.task_name }}
+      <span *ngFor="let people of task.assigned_people">
+        ew {{ people.full_name }}
+        <span *ngFor="let skill of people.skills">{{ skill }}</span>
+      </span>
+    </li>
+  </ul>
+</div>

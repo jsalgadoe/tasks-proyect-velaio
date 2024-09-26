@@ -1,0 +1,52 @@
+[
+  {
+    "task_name": "Homepage Design",
+    "deadline": "2024-10-05",
+    "assigned_people": [
+      {
+        "full_name": "John Smith",
+        "age": 29,
+        "skills": [
+          "web development",
+          "UI/UX design"
+        ]
+      }
+    ]
+  },
+  {
+    "task_name": "API Implementation",
+    "deadline": "2024-09-30",
+    "assigned_people": [
+      {
+        "full_name": "Sarah Johnson",
+        "age": 34,
+        "skills": [
+          "web development",
+          "API integration",
+          "cybersecurity"
+        ]
+      },
+      {
+        "full_name": "Michael Brown",
+        "age": 27,
+        "skills": [
+          "web development"
+        ]
+      }
+    ]
+  },
+  {
+    "task_name": "System Performance Testing",
+    "deadline": "2024-11-15",
+    "assigned_people": [
+      {
+        "full_name": "Emily Davis",
+        "age": 31,
+        "skills": [
+          "performance testing",
+          "test automation"
+        ]
+      }
+    ]
+  }
+]
