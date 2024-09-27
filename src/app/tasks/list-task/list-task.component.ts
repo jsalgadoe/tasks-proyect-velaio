@@ -1,9 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { TaskService } from '../services/task.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { CardItemComponent } from '../components/card-item/card-item.component';
 import { Task } from '../interfaces/tasks.inteface';
-import { take } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -12,46 +11,27 @@ import { take } from 'rxjs';
   templateUrl: './list-task.component.html',
   styleUrls: ['./list-task.component.css'],
 })
-export default class ListTaskComponent implements OnInit {
+export default class ListTaskComponent {
   private __taskService = inject(TaskService);
   public tasks_component: Task[] = [];
-  public tasks_original: Task[] = [];
 
-  ngOnInit(): void {
-    this.getAllTasks(null);
+  constructor() {
+    effect(() => {
+      this.getAllTasks(null);
+    });
   }
 
   getAllTasks(status: boolean | null) {
-    this.__taskService.allTasks2(status).subscribe((tasks) => {
-      this.tasks_component = tasks;
-      this.tasks_original = tasks;
-    });
+    this.tasks_component = this.__taskService.allTasks2(status)();
   }
 
   onStatusChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const status = selectElement.value;
-
-    this.tasks_component = [...this.tasks_original];
-
-    if (status !== 'null') {
-      const isCompleted = status === 'true';
-      console.log({ status: isCompleted });
-
-      this.tasks_component = this.tasks_original.filter((task) => {
-        console.log('Entrando al filtro:', isCompleted);
-        console.log('Estado de la tarea:', task.status);
-        return task.status === isCompleted;
-      });
-    }
+    this.getAllTasks(status === 'null' ? null : status === 'true');
   }
 
   onTaskStatusChanged(updatedTask: Task) {
-    const taskIndex = this.tasks_component.findIndex(
-      (task: Task) => task.id === updatedTask.id
-    );
-    if (taskIndex !== -1) {
-      this.tasks_component[taskIndex] = updatedTask;
-    }
+    this.__taskService.updateTaskStatus(updatedTask);
   }
 }
