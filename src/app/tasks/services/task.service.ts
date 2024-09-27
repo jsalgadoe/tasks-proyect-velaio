@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { map } from 'rxjs';
-import { Tasks } from '../interfaces/tasks.inteface';
+import { filter, map } from 'rxjs';
+import { Task } from '../interfaces/tasks.inteface';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,14 @@ export class TaskService {
       .subscribe((tasks) => {});
   }
 
-  public allTasks2() {
-    return this.http.get<Tasks[]>('assets/data.json');
+  public allTasks2(status: boolean | null = null) {
+    return this.http.get<Task[]>('assets/data.json').pipe(
+      map((tasks) =>
+        tasks.filter((task) => {
+          if (status === null) return task;
+          return task.status === status;
+        })
+      )
+    );
   }
 }

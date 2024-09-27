@@ -4,17 +4,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import ListTaskComponent from './tasks/list-task/list-task.component';
 import { NavBarComponent } from './ui/components/navBar/navBar.component';
-import { CreateTaskComponent } from './tasks/create-task/create-task.component';
+import ListTaskComponent from './tasks/list-task/list-task.component';
+import CreateTaskComponent from './tasks/create-task/create-task.component';
 
 @NgModule({
-  declarations: [AppComponent, CreateTaskComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     //* Standalone components
+    CreateTaskComponent,
     ListTaskComponent,
     NavBarComponent,
   ],

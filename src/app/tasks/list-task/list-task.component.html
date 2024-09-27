@@ -1,12 +1,23 @@
-<p>list-task works!</p>
-<div>
-  <ul>
-    <li *ngFor="let task of tasks">
-      {{ task.task_name }}
-      <span *ngFor="let people of task.assigned_people">
-        ew {{ people.full_name }}
-        <span *ngFor="let skill of people.skills">{{ skill }}</span>
-      </span>
-    </li>
-  </ul>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <label
+        for="taskStatus"
+        class="select-w-100 d-flex justify-content-center align-items-center"
+        >Filtrar:
+        <select
+          id="taskStatus"
+          (change)="onStatusChange($event)"
+          class="form-control"
+        >
+          <option value="true">Completadas</option>
+          <option value="false">Incompletas</option>
+          <option value="null" selected>Todos</option>
+        </select>
+      </label>
+    </div>
+    <div *ngFor="let task of tasks" class="col-12 col-md-6 col-lg-4">
+      <card-item [task]="task" />
+    </div>
+  </div>
 </div>

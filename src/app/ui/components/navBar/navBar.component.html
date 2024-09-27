@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand d-flex" href="#">
-      <i class="material-icons">task</i>
+      <i class="material-icons me-2">task</i>
+      TaskApp
     </a>
     <button
       class="navbar-toggler"
@@ -17,10 +18,18 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a
+            class="nav-link"
+            aria-current="page"
+            routerLink="/list"
+            routerLinkActive="active"
+            >Listar tareas</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" routerLink="/create" routerLinkActive="active"
+            >Crear tareas</a
+          >
         </li>
       </ul>
     </div>

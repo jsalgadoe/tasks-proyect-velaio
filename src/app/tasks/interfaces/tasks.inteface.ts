@@ -1,6 +1,7 @@
-export interface Tasks {
+export interface Task {
   task_name: string;
   deadline: Date;
+  status: boolean;
   assigned_people: AssignedPerson[];
 }
 
