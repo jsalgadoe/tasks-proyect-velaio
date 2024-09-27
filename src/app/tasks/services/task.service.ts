@@ -9,12 +9,6 @@ import { Task } from '../interfaces/tasks.inteface';
 export class TaskService {
   constructor(private http: HttpClient) {}
 
-  public allTasks() {
-    return this.http
-      .get('https://jsonplaceholder.typicode.com/todos')
-      .subscribe((tasks) => {});
-  }
-
   public allTasks2(status: boolean | null = null) {
     return this.http.get<Task[]>('assets/data.json').pipe(
       map((tasks) =>

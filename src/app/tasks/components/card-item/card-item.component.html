@@ -8,14 +8,14 @@
           <!-- Checbox -->
           <div class="checkbox-wrapper-28 mt-2">
             <input
-              id="tmp-28"
+              [id]="'task_' + task.id"
               type="checkbox"
               class="promoted-input-checkbox"
               [checked]="task.status"
               (change)="toggleStatus()"
             />
             <svg><use xlink:href="#checkmark-28" /></svg>
-            <label for="tmp-28">
+            <label [for]="'task_' + task.id">
               {{ task.status ? "Completado" : "Incompleto" }}
             </label>
             <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
