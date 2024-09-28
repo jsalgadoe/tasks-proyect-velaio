@@ -43,6 +43,7 @@ export default class CreateTaskComponent {
         '',
         [
           Validators.required,
+          Validators.minLength(5),
           (control: any) =>
             this.validationService.validateUniquePerson(control, this.persons),
         ],

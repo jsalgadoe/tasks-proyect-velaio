@@ -5,7 +5,6 @@ import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
   providedIn: 'root',
 })
 export class ValidationService {
-  // Validar si el nombre de una persona es único en el formulario
   validateUniquePerson(
     control: AbstractControl,
     formArray: FormArray
@@ -18,7 +17,6 @@ export class ValidationService {
     return isDuplicate ? { duplicatePerson: true } : null;
   }
 
-  // Validar que haya al menos una persona con al menos una habilidad
   validatePersons(formArray: FormArray): { [key: string]: boolean } | null {
     if (formArray.length === 0) {
       return { noPersons: true };
@@ -34,13 +32,15 @@ export class ValidationService {
     return null;
   }
 
-  // Obtener los errores de un campo para mostrar mensajes específicos
   getFieldError(control: AbstractControl): string | null {
     if (!control || !control.errors) return null;
 
     const errors = control.errors;
-
+    console.log(errors);
     if (errors['required']) return 'Este campo es requerido';
+    if (errors['minlength'])
+      return 'El nombre debe ser igual o mayor a 5 caracteres';
+
     if (errors['min']) return 'La edad debe ser mayor o igual a 18 años';
     if (errors['duplicatePerson']) return 'El nombre de la persona ya existe';
     if (errors['noPersons']) return 'Debe haber al menos una persona';
