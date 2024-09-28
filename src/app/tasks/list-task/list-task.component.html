@@ -3,7 +3,7 @@
     <div class="col-12">
       <label
         for="taskStatus"
-        class="select-w-100 d-flex justify-content-center align-items-center"
+        class="select-w-100 d-flex justify-content-center align-items-center my-3"
         >Filtrar:
         <select
           id="taskStatus"
@@ -17,8 +17,22 @@
       </label>
     </div>
 
-    <div *ngFor="let task of tasks_component" class="col-12 col-md-6 col-lg-4">
-      <card-item [task]="task" (statusChanged)="onTaskStatusChanged($event)" />
+    <div class="row" *ngIf="tasks_component().length > 0; else loading">
+      <div
+        *ngFor="let task of tasks_component()"
+        class="col-12 col-md-6 col-lg-4"
+      >
+        <card-item
+          [task]="task"
+          (statusChanged)="onTaskStatusChanged($event)"
+        />
+      </div>
     </div>
+
+    <ng-template #loading>
+      <div class="alert alert-primary mt-5" role="alert">
+        No hay tareas por el momento
+      </div>
+    </ng-template>
   </div>
 </div>

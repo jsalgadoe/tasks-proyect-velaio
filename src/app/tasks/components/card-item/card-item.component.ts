@@ -23,7 +23,6 @@ export class CardItemComponent {
 
   toggleStatus() {
     this.task.status = !this.task.status;
-    console.log(this.task.status);
     this.statusChanged.emit(this.task);
   }
 }

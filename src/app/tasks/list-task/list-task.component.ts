@@ -13,22 +13,20 @@ import { Task } from '../interfaces/tasks.inteface';
 })
 export default class ListTaskComponent {
   private __taskService = inject(TaskService);
-  public tasks_component: Task[] = [];
+  public tasks_component = this.__taskService.allTasks(null);
 
   constructor() {
     effect(() => {
-      this.getAllTasks(null);
+      this.tasks_component();
     });
-  }
-
-  getAllTasks(status: boolean | null) {
-    this.tasks_component = this.__taskService.allTasks2(status)();
   }
 
   onStatusChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     const status = selectElement.value;
-    this.getAllTasks(status === 'null' ? null : status === 'true');
+    this.tasks_component = this.__taskService.allTasks(
+      status === 'null' ? null : status === 'true'
+    );
   }
 
   onTaskStatusChanged(updatedTask: Task) {

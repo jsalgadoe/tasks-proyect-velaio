@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Task } from '../interfaces/tasks.inteface';
 
 import { signal, computed } from '@angular/core';
@@ -22,7 +20,7 @@ export class TaskService {
     });
   }
 
-  public allTasks2(status: boolean | null = null) {
+  public allTasks(status: boolean | null = null) {
     return computed(() => {
       const allTasks = this.tasks();
       return allTasks.filter((task) => {
@@ -30,6 +28,18 @@ export class TaskService {
         return task.status === status;
       });
     });
+  }
+
+  public addTask(task: Task) {
+    const genRandHex = (size: any) =>
+      [...Array(size)]
+        .map(() => Math.floor(Math.random() * 16).toString(16))
+        .join('');
+    let temporal_task = { ...task };
+    temporal_task.id = genRandHex(6);
+    temporal_task.status = false;
+
+    this.tasks().push(temporal_task);
   }
 
   public updateTaskStatus(updatedTask: Task): void {

@@ -1,1 +1,197 @@
-<p>create-task works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="d-flex justify-content-center align-items-center flex-column">
+        <form
+          autocomplete="off"
+          class="border p-4 form-w-full mt-4"
+          [formGroup]="myForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <h3>Crear Tarea</h3>
+          <!-- Inputs Nombre de Tarea  & fecha limite-->
+          <div class="mb-3 row">
+            <label class="col-sm-4 col-form-label">Nombre de la tarea</label>
+            <div class="col-sm-8">
+              <input
+                class="form-control"
+                formControlName="task_name"
+                placeholder="Ej: Module login"
+              />
+              <span
+                *ngIf="isValidField('task_name')"
+                class="form-text text-danger"
+              >
+                {{ getFieldError("task_name") }}
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-3 row">
+            <label class="col-sm-4 col-form-label">Fecha límite</label>
+            <div class="col-sm-8">
+              <input
+                class="form-control"
+                formControlName="deadline"
+                type="date"
+              />
+              <span
+                *ngIf="isValidField('deadline')"
+                class="form-text text-danger"
+              >
+                {{ getFieldError("deadline") }}
+              </span>
+            </div>
+          </div>
+          <hr />
+
+          <!-- Inputs array Personas y Habilidades -->
+          <div formArrayName="assigned_people">
+            <div
+              *ngFor="let person of persons.controls; let i = index"
+              class="mb-3"
+            >
+              <fieldset [formGroupName]="i">
+                <div class="d-flex">
+                  <legend>Persona {{ i + 1 }}</legend>
+                  <button
+                    class="btn btn-danger"
+                    type="button"
+                    (click)="removePerson(i)"
+                  >
+                    <i class="material-icons"> person_remove</i>
+                  </button>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-8">
+                    <input
+                      class="form-control"
+                      formControlName="full_name"
+                      placeholder="Nombre Completo"
+                      type="text"
+                    />
+                    <span
+                      *ngIf="
+                        isValidField('assigned_people.' + i + '.full_name')
+                      "
+                      class="form-text text-danger"
+                    >
+                      {{ getFieldError("assigned_people." + i + ".full_name") }}
+                    </span>
+                  </div>
+
+                  <div class="col-sm-4"></div>
+                </div>
+
+                <div class="row mt-2">
+                  <div class="col-sm-8">
+                    <input
+                      class="form-control"
+                      formControlName="age"
+                      placeholder="Edad"
+                      type="number"
+                    />
+
+                    <span
+                      *ngIf="isValidField('assigned_people.' + i + '.age')"
+                      class="form-text text-danger"
+                    >
+                      {{ getFieldError("assigned_people." + i + ".age") }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Habilidades -->
+                <fieldset formArrayName="skills" class="mt-3">
+                  <legend>Habilidades:</legend>
+                  <div
+                    *ngFor="let skill of getSkills(i).controls; let j = index"
+                    class="row mb-2"
+                  >
+                    <div class="col-10 col-sm-10">
+                      <input
+                        class="form-control"
+                        [formControlName]="j"
+                        placeholder="Ej: Web Development"
+                        type="text"
+                      />
+                      <span
+                        *ngIf="
+                          isValidField('assigned_people.' + i + '.skills.' + j)
+                        "
+                        class="form-text text-danger"
+                      >
+                        {{
+                          getFieldError("assigned_people." + i + ".skills." + j)
+                        }}
+                      </span>
+                    </div>
+                    <!-- Botón eliminar skill -->
+                    <div class="col-2 col-sm-2">
+                      <button
+                        class="btn btn-danger"
+                        type="button"
+                        (click)="removeSkill(i, j)"
+                      >
+                        <i class="material-icons" style="font-size: 15px">
+                          delete</i
+                        >
+                      </button>
+                    </div>
+                  </div>
+                </fieldset>
+
+                <button
+                  class="btn btn-outline-secondary mt-2"
+                  type="button"
+                  (click)="addSkill(i)"
+                >
+                  Agregar Habilidad
+                </button>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="d-grid gap-3">
+            <button
+              class="btn btn-outline-primary"
+              type="button"
+              (click)="addPerson()"
+            >
+              Agregar Persona
+            </button>
+            <button type="submit" class="btn btn-outline-success">
+              Crear Tarea
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Visualización de la tarea -->
+    <div
+      class="col-12 col-md-6 d-flex justify-content-center align-items-start my-5 sticky"
+    >
+      <div class="card" style="width: 18rem">
+        <div class="card-body">
+          <h5 class="card-title">
+            Nombre de la tarea: {{ myForm.value.task_name }} -
+            {{ myForm.value.deadline }}
+          </h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary">
+            Personas Asignadas
+          </h6>
+          <ul>
+            <li *ngFor="let person of myForm.value.persons; let i = index">
+              {{ person.name_person }} ({{ person.age }} años)
+              <ul>
+                <li *ngFor="let skill of person.skills">{{ skill }}</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
