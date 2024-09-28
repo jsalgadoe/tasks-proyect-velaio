@@ -9,9 +9,9 @@ export class ValidationService {
     control: AbstractControl,
     formArray: FormArray
   ): { [key: string]: boolean } | null {
-    const name = control.value;
-    const existingNames = formArray.controls.map(
-      (person) => person.get('full_name')?.value
+    const name = control.value.toLowerCase();
+    const existingNames = formArray.controls.map((person) =>
+      person.get('full_name')?.value.toLowerCase()
     );
     const isDuplicate = existingNames.filter((n) => n === name).length > 1;
     return isDuplicate ? { duplicatePerson: true } : null;
@@ -36,7 +36,7 @@ export class ValidationService {
     if (!control || !control.errors) return null;
 
     const errors = control.errors;
-    console.log(errors);
+
     if (errors['required']) return 'Este campo es requerido';
     if (errors['minlength'])
       return 'El nombre debe ser igual o mayor a 5 caracteres';

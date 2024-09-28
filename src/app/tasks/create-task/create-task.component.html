@@ -183,8 +183,10 @@
             Personas Asignadas
           </h6>
           <ul>
-            <li *ngFor="let person of myForm.value.persons; let i = index">
-              {{ person.name_person }} ({{ person.age }} años)
+            <li
+              *ngFor="let person of myForm.value.assigned_people; let i = index"
+            >
+              {{ person.full_name }} ({{ person.age }} años)
               <ul>
                 <li *ngFor="let skill of person.skills">{{ skill }}</li>
               </ul>

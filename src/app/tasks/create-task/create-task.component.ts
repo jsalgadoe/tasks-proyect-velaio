@@ -14,7 +14,7 @@ import { TaskService } from '../services/task.service';
 })
 export default class CreateTaskComponent {
   private fb = inject(FormBuilder);
-  private validationService = inject(ValidationService); // Inyectamos el servicio
+  private validationService = inject(ValidationService);
   private __taskService = inject(TaskService);
 
   public myForm: FormGroup = this.fb.group({
